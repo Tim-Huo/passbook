@@ -1,0 +1,8 @@
+#命名空间
+create_namespace 'pb'
+
+#user:表名            b：列族名称      3个版本        列族数据生成时间        布隆过滤器
+create 'pb:user', {NAME => 'b', VERSIONS => '3', TTL => '2147483647', 'BLOOMFILTER' => 'ROW'}, {NAME => 'o', VERSIONS => '3', TTL => '2147483647', 'BLOOMFILTER' => 'ROW'}
+create 'pb:pass', {NAME => 'i', VERSIONS => '3', TTL => '2147483647', 'BLOOMFILTER' => 'ROW'}
+create 'pb:passtemplate', {NAME => 'b', VERSIONS => '3', TTL => '2147483647', 'BLOOMFILTER' => 'ROW'}, {NAME => 'c', VERSIONS => '3', TTL => '2147483647', 'BLOOMFILTER' => 'ROW'}
+create 'pb:feedback', {NAME => 'i', VERSIONS => '3', TTL => '2147483647', 'BLOOMFILTER' => 'ROW'}

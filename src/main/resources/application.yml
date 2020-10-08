@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: ImoocMerchants
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/passbook?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&autoReconnect=true
+    username: root
+    password: 123456
+
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
+    consumer:
+      group-id: passbook  #消费者组
+    listener:
+      concurrency: 4      #消费者并发度
+
+  data:
+    hbase:
+      quorum: 127.0.0.1:2181
+      rootDir: file:///Users/timhuo/software/data
+      nodeParent: /hbase
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+server:
+  port: 9528
+
+logging:
+  level: debug:true
+  file: timhuo-passbook.log

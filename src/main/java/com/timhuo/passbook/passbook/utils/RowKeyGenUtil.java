@@ -1,0 +1,46 @@
+package com.timhuo.passbook.passbook.utils;
+
+import com.timhuo.passbook.passbook.vo.PassTemplate;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
+import com.timhuo.passbook.passbook.vo.Feedback;
+
+/**
+ * @description: 生成器工具类
+ * @author: Tim_Huo
+ * @created: 2020/10/08 19:54
+ */
+@Slf4j
+public class RowKeyGenUtil {
+
+    /**
+     * 根据提供的 PassTemplate 对象生成 Rowkey
+     * Hbase是基于集群来存储，msd可以分散数据存储的服务器，用来实现负载均衡
+     *
+     * @param passTemplate {@link PassTemplate}
+     * @return String RowKey
+     */
+    public static String genPassTemplateRowKey(PassTemplate passTemplate){
+
+        String passInfo = String.valueOf(passTemplate.getId())+"_"+passTemplate.getTitle();
+        String rowKey = DigestUtils.md5Hex(passInfo);
+        log.info("GenPassTemplateRowKey:{},{}",passInfo,rowKey);
+
+        return rowKey;
+    }
+
+    /**
+     * 根据Feedback 构造 Rowkey
+     * reverse():反转
+     * 同一个userId，越早创建越在后面，便于分页和扫描，展示最近的前10条
+     *
+     * @param feedback {@link Feedback}
+     * @return String RowKey
+     */
+    public static String genFeedbackRowKey(Feedback feedback){
+        return new StringBuilder(String.valueOf(feedback.getUserId())).reverse().toString()+
+                (Long.MAX_VALUE-System.currentTimeMillis());
+    }
+
+
+}
