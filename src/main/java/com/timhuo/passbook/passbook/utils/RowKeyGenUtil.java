@@ -1,5 +1,6 @@
 package com.timhuo.passbook.passbook.utils;
 
+import com.timhuo.passbook.passbook.vo.GainPassTemplateRequest;
 import com.timhuo.passbook.passbook.vo.PassTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -30,17 +31,26 @@ public class RowKeyGenUtil {
     }
 
     /**
+     * 根据提供的领取优惠券请求生成 rowkey,只可以在领取优惠券的时候使用
+     * Pass RowKey = reversed(userId)+ inverse(timeStamp)+ PAssTemplate RowKey
+     * @param request {@link GainPassTemplateRequest}
+     * @return String Rowkey
+     */
+    public static String genPassRowkey(GainPassTemplateRequest request){
+        return new StringBuilder(String.valueOf(request.getUserId())).reverse().toString()
+                + (Long.MAX_VALUE - System.currentTimeMillis())
+                + genPassTemplateRowKey(request.getPassTemplate());
+    }
+
+    /**
      * 根据Feedback 构造 Rowkey
-     * reverse():反转
-     * 同一个userId，越早创建越在后面，便于分页和扫描，展示最近的前10条
-     *
      * @param feedback {@link Feedback}
      * @return String RowKey
      */
     public static String genFeedbackRowKey(Feedback feedback){
         return new StringBuilder(String.valueOf(feedback.getUserId())).reverse().toString()+
                 (Long.MAX_VALUE-System.currentTimeMillis());
-    }
 
+    }
 
 }
