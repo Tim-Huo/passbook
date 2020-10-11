@@ -12,10 +12,9 @@ import lombok.NoArgsConstructor;
  * @created: 2020/10/11 06:32
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class PassTemplateInfo extends PassTemplate{
+public class PassTemplateInfo {
 
     //优惠券模板信息
     private PassTemplate passTemplate;
